@@ -8,29 +8,41 @@ Here are the current phases I've outlined with the tasks I'm anticipating gettin
 *These phases will continue to be built out as I continue working on this*
 
 **Phase 1 - Initial Project Setup**
-[] Setting up expected dir structure
-[] Installing necessary dependencies
-[] Populating ReadME
+
+[ ] Setting up expected dir structure
+
+[ ] Installing necessary dependencies
+
+[ ] Populating ReadME
 
 **Phase 2 - Initial Backend Setup**
-[] Setting up my local database
-[] Setting up Sequelize
-[] Running migration to populate db
+
+[ ] Setting up my local database
+
+[ ] Setting up Sequelize
+
+[ ] Running migration to populate db
 
 **Phase 3 - Expanding Sequelize and Creating APIs**
-[] Set up the RESTful APIs needed by the frontend
-[] Write functional tests with Jest
-[] Create APIs with Express
+
+[ ] Set up the RESTful APIs needed by the frontend
+
+[ ] Write functional tests with Jest
+
+[ ] Create APIs with Express
 
 **Phase 4 - Initial Frontend Build**
-[] Set up sections for featured holiday and recipe results
-[] Create mock objects based on expected results from recipes
-[] Create empty states for no holiday, errors from public apis, etc.
+
+[ ] Set up sections for featured holiday and recipe results
+
+[ ] Create mock objects based on expected results from recipes
+
+[ ] Create empty states for no holiday, errors from public apis, etc.
 
 
 ## Folder Structure (for ease of access)
 /food-holiday-menu-project
-|-- /backend 🎂
+|-- /backend
 |   |-- /config               
 |   |   |-- config.ts         
 |   |-- /src
