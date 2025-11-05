@@ -41,7 +41,8 @@ Here are the current phases I've outlined with the tasks I'm anticipating gettin
 
 
 ## Folder Structure (for ease of access)
-/food-holiday-menu-project
+```sh
+src
 |-- /backend
 |   |-- /config               
 |   |   |-- config.ts         
@@ -77,4 +78,5 @@ Here are the current phases I've outlined with the tasks I'm anticipating gettin
 |-- .gitignore
 |-- README.md
 |-- package.json              
-|-- tsconfig.json             
+|-- tsconfig.json   
+```          
