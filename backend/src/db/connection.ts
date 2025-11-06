@@ -1,54 +1,79 @@
+'use strict';
+
 import { Sequelize } from 'sequelize';
 import dotenv from 'dotenv';
-// Import your Holiday and Recipe models here once created
-// import { Holiday } from '../models/Holiday'; 
-// import { Recipe } from '../models/Recipe'; 
+import { initializeHolidayModel } from '../models/Holiday'; 
 
 dotenv.config();
 
-// Create the single Sequelize instance
-const sequelize = new Sequelize({
-    dialect: 'postgres',
+const DB_NAME = process.env.DB_NAME || 'food_holiday_menu';
+const config = {
+    dialect: 'postgres' as const,
     host: process.env.DB_HOST,
     port: Number(process.env.DB_PORT),
-    username: process.env.DB_USERNAME,
+    username: process.env.DB_USERNAME || 'postgres',
     password: process.env.DB_PASSWORD,
-    database: process.env.DB_NAME,
     logging: false,
-});
+};
 
-// Function to initialize models (Crucial step)
-// You would call MyModel.init(attributes, { sequelize }) in your model files.
-const initializeModels = () => {
-    // Example: Holiday.init(..., { sequelize });
-    // Example: Recipe.init(..., { sequelize });
+let sequelize: Sequelize | null = null;
 
-    // After all models are initialized, set up associations:
-    // Example: Holiday.hasMany(Recipe);
-    // Example: Recipe.belongsTo(Holiday);
+const createDatabaseIfNotExist = async () => {
+    const tempSequelize = new Sequelize('postgres', config.username, config.password, {
+        ...config,
+        database: 'postgres',
+        logging: false,
+    });
+
+    try {
+        await tempSequelize.authenticate();
+        console.log(`[INFO] Connected to PostgreSQL admin database: 'postgres'.`);
+
+        const [results] = await tempSequelize.query(
+            `SELECT 1 FROM pg_database WHERE datname = '${DB_NAME}'`
+        );
+
+        if (results.length === 0) {
+            console.log(`[INFO] Database '${DB_NAME}' not found. Creating it now...`);
+            await tempSequelize.query(`CREATE DATABASE "${DB_NAME}"`);
+            console.log(`✅ Database '${DB_NAME}' created successfully.`);
+        } else {
+            console.log(`[INFO] Database '${DB_NAME}' already exists.`);
+        }
+    } catch (error) {
+        console.error('❌ Failed to create or check database:', error);
+        throw error;
+    } finally {
+        await tempSequelize.close();
+    }
 };
 
 
 /**
  * @description Establishes the database connection and syncs models.
  */
-export const connectDB = async (): Promise<void> => {
-    try {
-        // 1. Authenticate connection
-        await sequelize.authenticate();
-        console.log('✅ PostgreSQL connection established successfully.');
-
-        // 2. Initialize and Sync Models
-        initializeModels(); 
+export const connectDB = async (): Promise<Sequelize> => {
+    if (!sequelize) {
+        await createDatabaseIfNotExist();
         
-        // This command checks the current state of the database and performs necessary changes
-        // to make the schema match the models. Use `alter: true` for development.
-        await sequelize.sync({ alter: true }); 
-        console.log('✅ Database synchronized with models.');
+        sequelize = new Sequelize(DB_NAME, config.username, config.password, {
+            ...config,
+            database: DB_NAME, 
+        });
+    }
 
+    try {
+        await sequelize!.authenticate(); 
+        console.log('✅ Main application connection established successfully.');
+
+        initializeHolidayModel(sequelize!); 
+
+        await sequelize!.sync({ alter: true });
+        console.log('✅ Database synchronized with models.');
+        
+        return sequelize!;
     } catch (error) {
         console.error('❌ Unable to connect to the database:', error);
-        // Fail fast if the database is critical
         process.exit(1); 
     }
 };
@@ -57,14 +82,15 @@ export const connectDB = async (): Promise<void> => {
  * @description Gracefully closes the Sequelize connection pool.
  */
 export const disconnectDB = async (): Promise<void> => {
-    try {
-        await sequelize.close();
-        console.log('❌ Sequelize connection pool closed.');
-    } catch (error) {
-        console.error('❌ Error during Sequelize disconnect:', error);
-        throw error; // Re-throw for server.ts to handle the fatal exit
+    if (sequelize) {
+        try {
+            await sequelize.close();
+            console.log('✅ Sequelize connection pool closed.🚪'); 
+        } catch (error) {
+            console.error('❌ Error during Sequelize disconnect:', error); 
+            throw error;
+        }
     }
 };
 
-// Export the sequelize instance for use in models and controllers
 export default sequelize;

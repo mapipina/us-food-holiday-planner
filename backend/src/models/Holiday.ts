@@ -1,5 +1,6 @@
-import { DataTypes, Model, Optional } from 'sequelize';
-import sequelize from '../db/connection';
+import { DataTypes, Model, Optional, Sequelize } from 'sequelize';
+
+
 export interface HolidayAttributes {
     id: number;
     title: string;
@@ -21,33 +22,37 @@ export class Holiday extends Model<HolidayAttributes, HolidayCreationAttributes>
     public readonly updatedAt!: Date;
 }
 
-Holiday.init(
-    {
-        id: {
-            type: DataTypes.INTEGER.UNSIGNED,
-            autoIncrement: true,
-            primaryKey: true,
+export const initializeHolidayModel = (sequelizeInstance: Sequelize) => {
+    Holiday.init(
+        {
+            id: { 
+                type: DataTypes.INTEGER.UNSIGNED, 
+                autoIncrement: true, 
+                primaryKey: true, 
+            },
+            title: {
+                type: new DataTypes.STRING(128),
+                allowNull: false,
+                unique: true,
+            },
+            description: {
+                type: new DataTypes.TEXT,
+                allowNull: false,
+            },
+            main_meal: {
+                type: new DataTypes.STRING(64), // don't want this to be too long 
+                allowNull: false,
+            },
+            date_mm_dd: {
+                type: new DataTypes.STRING(5), 
+                allowNull: false,
+            }
         },
-        title: {
-            type: new DataTypes.STRING(128),
-            allowNull: false,
-            unique: true,
-        },
-        description: {
-            type: new DataTypes.TEXT,
-            allowNull: false,
-        },
-        main_meal: {
-            type: new DataTypes.STRING(64),
-            allowNull: false,
-        },
-        date_mm_dd: {
-            type: new DataTypes.STRING(5), 
-            allowNull: false,
+        {
+            tableName: 'holidays',
+            sequelize: sequelizeInstance, 
+            modelName: 'Holiday', 
         }
-    },
-    {
-        tableName: 'holidays',
-        sequelize: sequelize,
-    }
-);
+    );
+    return Holiday;
+};

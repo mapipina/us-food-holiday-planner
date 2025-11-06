@@ -19,7 +19,7 @@ module.exports = {
         allowNull: false,
       },
       main_meal: {
-        type: Sequelize.STRING, 
+        type: Sequelize.STRING(64), 
         allowNull: false,
       },
       date_mm_dd: {
