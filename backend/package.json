@@ -1,10 +1,9 @@
 {
 "scripts": {
     "dev": "nodemon --exec ts-node -r dotenv/config src/server.ts",
-    "start": "ts-node -r dotenv/config src/server.ts",
-    "db:create": "node -r dotenv/config -r ts-node/register src/db/connection.ts", 
-    "db:migrate": "npx sequelize-cli db:migrate --config=./config/sequelize-cli.js",
-    "db:seed": "npx sequelize-cli db:seed:all --config=./config/sequelize-cli.js",
+    "db:create": "node -r dotenv/config -r ts-node/register src/db/connection.ts",
+    "db:migrate": "node -r dotenv/config ./node_modules/sequelize-cli/lib/sequelize-cli.js db:migrate --config=./config/sequelize-cli.js",
+    "db:seed": "node -r dotenv/config ./node_modules/sequelize-cli/lib/sequelize-cli.js db:seed:all --config=./config/sequelize-cli.js",
     "db:setup-init": "npm run db:create && npm run db:migrate && npm run db:seed"
 },
   "devDependencies": {
