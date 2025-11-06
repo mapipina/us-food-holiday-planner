@@ -9,19 +9,15 @@ Here are the current phases I've outlined with the tasks I'm anticipating gettin
 
 **Phase 1 - Initial Project Setup**
 
-[ ] Setting up expected dir structure
-
-[ ] Installing necessary dependencies
-
-[ ] Populating ReadME
+- ✅ Setting up expected dir structure :check:
+- ✅ Installing necessary dependencies
+- ✅ Populating ReadME
 
 **Phase 2 - Initial Backend Setup**
 
-[ ] Setting up my local database
-
-[ ] Setting up Sequelize
-
-[ ] Running migration to populate db
+- ✅ Setting up my local database
+- ✅ Setting up Sequelize
+- ✅ Seeding local db
 
 **Phase 3 - Expanding Sequelize and Creating APIs**
 
