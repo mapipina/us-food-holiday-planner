@@ -93,4 +93,23 @@ export const disconnectDB = async (): Promise<void> => {
     }
 };
 
+// --- Script Execution Block ---
+// This ensures that when the file is run directly (via npm run db:create), 
+// the main connection function is called.
+if (require.main === module) {
+    console.log('[INFO] Running connection setup script...');
+    connectDB()
+        .then(() => {
+            console.log('Setup finished. Process exiting.');
+            // We explicitly exit because connectDB() starts the server logic, 
+            // and we only want the connection/creation logic to run here.
+            process.exit(0);
+        })
+        .catch((err) => {
+            console.error('FATAL ERROR during DB setup:', err);
+            process.exit(1);
+        });
+}
+
+// Ensure you export default sequelize at the very end if needed for other files
 export default sequelize;

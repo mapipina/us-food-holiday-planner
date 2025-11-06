@@ -5,7 +5,7 @@ const path = require('path');
 const csv = require('csv-parser');
 
 
-const CSV_FILE_PATH = path.resolve(__dirname, '../../../data/us-food-holidays.csv');
+const CSV_FILE_PATH = path.resolve(__dirname, '../data/us-food-holidays.csv');
 
 module.exports = {
   up: async (queryInterface) => {
@@ -17,7 +17,7 @@ module.exports = {
         .on('data', (row) => {
           data.push({
             title: row.holiday_title,
-            description: row.holiday_description,
+            description: row.holiday_desc,
             main_meal: row.main_meal,
             date_mm_dd: row.date_MM_dd,
             createdAt: new Date(),
