@@ -42,7 +42,6 @@ See the root level README for more information on tracking the phases / stages o
 | `npm run db:seed` | **Inserts the food holiday data** into the `holidays` table. Use this only after the `db:migrate` step is complete. |
 | `npm run test` | Runs all unit and integration tests using Jest. |
 
----
 
 ## Database Maintenance and Development
 
