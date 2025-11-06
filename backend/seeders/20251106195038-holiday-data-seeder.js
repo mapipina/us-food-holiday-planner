@@ -32,7 +32,6 @@ module.exports = {
         });
     });
 
-    // 3. Insert Data into the 'holidays' table
     return queryInterface.bulkInsert('holidays', results, {});
   },
 
