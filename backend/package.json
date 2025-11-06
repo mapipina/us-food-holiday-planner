@@ -1,12 +1,20 @@
 {
+  "scripts": {
+    "dev": "nodemon --exec ts-node -r dotenv/config src/server.ts",
+    "start": "ts-node -r dotenv/config src/server.ts",
+    "test": "jest",
+    "db:migrate": "npx sequelize-cli db:migrate --config=./config/sequelize-cli.js",
+    "db:seed": "npx sequelize-cli db:seed:all --config=./config/sequelize-cli.js",
+    "db:setup": "npm run db:migrate && npm run db:seed"
+  },
   "devDependencies": {
     "@types/cors": "2.8.19",
     "@types/express": "^5.0.5",
-    "@types/jest": "^30.0.0",
-    "@types/node": "^24.10.0",
+    "@types/pg": "8.15.6",
     "@types/sequelize": "^6.12.0",
     "jest": "^30.2.0",
     "nodemon": "^3.1.10",
+    "sequelize-cli": "6.6.3",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3"
   },
