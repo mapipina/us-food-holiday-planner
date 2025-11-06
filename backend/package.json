@@ -19,8 +19,10 @@
     "typescript": "^5.9.3"
   },
   "dependencies": {
+    "@types/csv-parse": "1.1.12",
     "axios": "^1.13.2",
     "cors": "2.8.5",
+    "csv-parser": "3.2.0",
     "dotenv": "^17.2.3",
     "express": "^5.1.0",
     "pg": "^8.16.3",
