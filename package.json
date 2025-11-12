@@ -6,6 +6,8 @@
     "ts-jest": "29.4.5"
   },
   "dependencies": {
+    "@types/luxon": "^3.7.1",
+    "luxon": "^3.7.2",
     "typescript": "5.9.3"
   }
 }
