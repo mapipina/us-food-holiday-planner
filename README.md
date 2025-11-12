@@ -21,11 +21,9 @@ Here are the current phases I've outlined with the tasks I'm anticipating gettin
 
 **Phase 3 - Expanding Sequelize and Creating APIs**
 
-[ ] Set up the RESTful APIs needed by the frontend
-
-[ ] Write functional tests with Jest
-
-[ ] Create APIs with Express
+- ✅ Set up the RESTful APIs needed by the frontend
+- ✅ Write functional tests with Jest
+- ✅ Create APIs with Express and axios
 
 **Phase 4 - Initial Frontend Build**
 
