@@ -5,7 +5,7 @@ dotenv.config();
 
 import { connectDB } from './db/connection'; 
 import holidayRoutes from './routes/holidayRoutes'; 
-// import recipeRoutes from './routes/recipeRoutes';
+import recipeRoutes from './routes/recipeRoutes';
 
 const app: Application = express();
 
@@ -18,6 +18,6 @@ app.use(express.json());
 
 
 app.use('/api/v1/holidays', holidayRoutes);
-// app.use('/api/v1/recipes', recipeRoutes); // will need to use external API
+app.use('/api/v1/recipes', recipeRoutes);
 
 export default app;

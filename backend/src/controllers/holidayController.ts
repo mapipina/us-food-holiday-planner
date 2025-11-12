@@ -1,11 +1,11 @@
-import { Request, Response, NextFunction } from 'express';
+import { Request, Response } from 'express';
 import { Holiday } from '../models/Holiday';
 import { DateTime } from 'luxon';
 
 /**
  * @route GET /api/v1/holidays
  */
-export const getAllHolidays = async (req: Request, res: Response, next: NextFunction) => {
+export const getAllHolidays = async (_req: Request, res: Response) => {
     try {
         const holidays = await Holiday.findAll({
             order: [['date_mm_dd', 'ASC']],
@@ -35,7 +35,7 @@ const getTodayDateString = (): string => {
 /**
  * @route GET /api/v1/holidays/today
  */
-export const getTodaysHoliday = async (req: Request, res: Response, next: NextFunction) => {
+export const getTodaysHoliday = async (_req: Request, res: Response) => {
     try {
         const todayDate = getTodayDateString();
 

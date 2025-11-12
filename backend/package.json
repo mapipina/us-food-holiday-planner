@@ -7,7 +7,7 @@
     "db:migrate": "dotenv -e .env -- npx sequelize-cli db:migrate --config=./config/sequelize-cli.js",
     "db:seed": "dotenv -e .env -- npx sequelize-cli db:seed:all --config=./config/sequelize-cli.js",
     "db:setup-init": "npm run db:create && npm run db:migrate && npm run db:seed",
-    "test": "jest"
+    "test": "jest --watch"
   },
   "devDependencies": {
     "@types/cors": "2.8.19",
