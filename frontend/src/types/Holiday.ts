@@ -1,3 +1,5 @@
+type APIStatusResponse = 'success' | 'fail' | 'error';
+
 export interface HolidayData {
     id: number;
     title: string;
@@ -28,10 +30,21 @@ export interface ApiItemResponse {
     };
 }
 
-export interface ApiRecipeResponse {
-    status:  APIStatusResponse;
-    holidayTitle: string;
-    data: RecipeDatum[];
+export interface ApiRecipeSuccessResponse {
+    status: 'success';
+    data: {
+        holiday: {
+            title: string;
+            main_meal: string;
+        },
+        recipes: RecipeDatum[] | null;
+    };
 }
 
-type APIStatusResponse = 'success' | 'fail' | 'error';
+export interface ApiRecipeFailResponse {
+    status: 'fail' | 'error';
+    message: string;
+    data?: any; 
+}
+
+export type ApiRecipeResponse = ApiRecipeSuccessResponse | ApiRecipeFailResponse;

@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "jest"
   },
   "dependencies": {
     "axios": "^1.13.2",
@@ -26,6 +27,31 @@
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.22",
     "globals": "^16.4.0",
+    "jest-environment-jsdom": "30.2.0",
+    "msw": "^2.12.1",
     "vite": "^7.1.7"
+  },
+  "jest": {
+    "testEnvironment": "jsdom",
+    "globalSetup": "<rootDir>/src/tests/jest-setup.js",
+    "setupFilesAfterEnv": [
+      "<rootDir>/src/tests/setup.ts"
+    ],
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json"
+    ],
+    "transform": {
+      "^.+\\.(ts|tsx)$": "ts-jest"
+    },
+    "moduleNameMapper": {
+      "\\.(css|less|scss|sass)$": "identity-obj-proxy"
+    },
+    "testMatch": [
+      "<rootDir>/src/**/*.test.{ts,tsx}"
+    ]
   }
 }
