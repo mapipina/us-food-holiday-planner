@@ -34,7 +34,9 @@ Here are the current phases I've outlined with the tasks I'm anticipating gettin
 [ ] Create empty states for no holiday, errors from public apis, etc.
 
 **Phase 5 - CI/CD Updates And Addt'l Updates**
+
 [ ] Set up checks for PRs with GH Actions
+
 [ ] Code coverage FTW
 
 
