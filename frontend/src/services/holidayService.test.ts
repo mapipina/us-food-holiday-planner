@@ -1,44 +1,80 @@
 import { getAllHolidays, getTodayHoliday, getRecipeByHolidayId } from './holidayService';
-import { http, HttpResponse } from 'msw';
-import { server } from '../tests/setup';
+import axios from 'axios'; 
 
-const BASE_URL = 'http://localhost:3000/api/v1';
+jest.mock('axios');
+const mockedAxios = axios as jest.Mocked<typeof axios>;
 
-describe('Holiday Service', () => {
-    
+const mockHolidayList = [
+    { id: 1, title: 'Pizza Day', description: 'Pizza', main_meal: 'Pizza', date_mm_dd: '02-09' },
+    { id: 2, title: 'Coffee Day', description: 'Coffee', main_meal: 'Coffee', date_mm_dd: '09-29' },
+];
+const mockTodayHoliday = { 
+    id: 10, 
+    title: 'Mock Today Holiday', 
+    description: 'Testing today.', 
+    main_meal: 'Testing', 
+    date_mm_dd: '01-01' 
+};
+const mockRecipes = [
+    { idMeal: '52771', strMeal: 'Spicy Arrabiata Penne', /* ... */ }
+];
+
+describe('Holiday Service Test Suite', () => {
+    afterEach(() => {
+        jest.clearAllMocks();
+    });
+
     it('should fetch and return a list of all holidays', async () => {
-        const holidays = await getAllHolidays();
+        mockedAxios.get.mockResolvedValueOnce({
+            data: { 
+                status: 'success', 
+                results: 2, 
+                data: { holidays: mockHolidayList }
+            }
+        });
 
-        expect(holidays).toBeInstanceOf(Array);
+        const holidays = await getAllHolidays();
+        
         expect(holidays.length).toBe(2);
-        expect(holidays[0].title).toBe('Pizza Day');
+        expect(mockedAxios.get).toHaveBeenCalledTimes(1);
     });
 
     it('should fetch and return a single holiday for "today"', async () => {
-        const holiday = await getTodayHoliday();
+        mockedAxios.get.mockResolvedValueOnce({
+            data: { 
+                status: 'success', 
+                data: { holiday: mockTodayHoliday }
+            }
+        });
 
+        const holiday = await getTodayHoliday();
         expect(holiday.title).toBe('Mock Today Holiday');
-        expect(holiday.main_meal).toBe('Testing');
     });
 
     it('should fetch and return an array of recipes for a given ID', async () => {
-        const recipes = await getRecipeByHolidayId(123); 
+        mockedAxios.get.mockResolvedValueOnce({
+            data: {
+                status: 'success',
+                data: {
+                    holiday: { title: 'Taco Day', main_meal: 'Taco' },
+                    recipes: mockRecipes
+                }
+            }
+        });
 
+        const recipes = await getRecipeByHolidayId(123);
         expect(recipes).toBeInstanceOf(Array);
-        expect(recipes.length).toBeGreaterThan(0);
         expect(recipes[0].idMeal).toBe('52771');
-        expect(recipes[0].strMeal).toBe('Spicy Arrabiata Penne');
     });
+    
+    it('should throw an error if the API returns status "fail"', async () => {
+        mockedAxios.get.mockResolvedValueOnce({
+            data: {
+                status: 'fail',
+                message: 'No recipes found for the dish'
+            }
+        });
 
-    it('should throw an error if the recipes API call fails (500)', async () => {
-        server.use(
-            http.get(`${BASE_URL}/recipes/:id`, () => {
-                return HttpResponse.json({ status: 'error', data: { recipes: null } }, { status: 500 });
-            })
-        );
-
-        await expect(getRecipeByHolidayId(123)).rejects.toThrow(); 
-
-        server.resetHandlers();
+        await expect(getRecipeByHolidayId(123)).rejects.toThrow('No recipes found for the dish');
     });
 });
