@@ -41,16 +41,16 @@ describe('Holiday Endpoints', () => {
             expect(response.body.data.holiday.title).toBe(TODAY_HOLIDAY_TITLE);
         });
 
-        it('should return 404 if no holiday exists for the mocked date', async () => {
+        it('should return 200 if no holiday exists for the mocked date', async () => {
             jest.spyOn(originalLuxon.DateTime, 'local').mockReturnValue({
                 toFormat: () => '99-99',
             });
             
             const response = await request(app).get('/api/v1/holidays/today');
             
-            expect(response.statusCode).toBe(404);
-            expect(response.body.status).toBe('fail');
-            expect(response.body.message).toBe('No major food holiday found for today: 99-99');
+            expect(response.statusCode).toBe(200);
+            expect(response.body.status).toBe('success');
+            expect(response.body.data.holiday).toBeNull();
 
             jest.spyOn(originalLuxon.DateTime, 'local').mockReturnValue({
                 toFormat: () => MOCK_DATE,

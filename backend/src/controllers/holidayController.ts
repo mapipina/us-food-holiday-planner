@@ -47,9 +47,11 @@ export const getTodaysHoliday = async (_req: Request, res: Response) => {
         });
 
         if (!holiday) {
-            return res.status(404).json({
-                status: 'fail',
-                message: `No major food holiday found for today: ${todayDate}`
+            return res.status(200).json({
+                status: 'success',
+                data: {
+                    holiday: null,
+                }
             });
         }
 

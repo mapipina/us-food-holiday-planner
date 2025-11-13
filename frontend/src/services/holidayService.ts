@@ -16,9 +16,14 @@ export async function getAllHolidays(): Promise<HolidayData[]> {
     return res.data.data.holidays;
 }
 
-export async function getTodayHoliday(): Promise<HolidayData> {
-    const res = await axios.get<ApiItemResponse>(`${BASE_URL}/holidays/today`);
-    return res.data.data.holiday;
+export async function getTodayHoliday(): Promise<HolidayData | null> {
+    const response = await axios.get<ApiItemResponse>(`${BASE_URL}/holidays/today`);
+    
+    if (response.data.status !== 'success') {
+        throw new Error(response.data.message || 'Operation failed in backend.');
+    }
+
+    return response.data.data?.holiday ?? null; 
 }
 
 export async function getRecipeByHolidayId(id: number): Promise<RecipeDatum[]> { 

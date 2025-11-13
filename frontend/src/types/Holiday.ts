@@ -13,6 +13,12 @@ export interface RecipeDatum {
     strMeal: string;
     strInstructions: string;
     strMealThumb: string;
+    strMealAlternate?: string | null;
+    strArea?: string | null;
+    strCategory?: string | null;
+    strTags?: string | null;
+    strYoutube?: string | null;
+    [key: string]: any;
 }
 
 export interface ApiListResponse {
@@ -27,7 +33,8 @@ export interface ApiItemResponse {
     status: APIStatusResponse;
     data: {
         holiday: HolidayData;
-    };
+    } | null;
+    message?: string;
 }
 
 export interface ApiRecipeSuccessResponse {
