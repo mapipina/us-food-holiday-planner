@@ -47,7 +47,8 @@
             { 
                 "tsconfig": "tsconfig.json" 
             }
-        ]
+        ],
+        "^.+\\.(js|jsx)$": "babel-jest"
     },
     "moduleFileExtensions": [
         "ts",
