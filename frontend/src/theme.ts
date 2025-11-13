@@ -1,53 +1,69 @@
 import { createTheme } from '@mui/material/styles';
-import { orange, blueGrey } from '@mui/material/colors';
+import { blueGrey } from '@mui/material/colors';
 
-// Define the font family names
 const TRUCULENTA_FONT = 'Truculenta, sans-serif';
+
+const PRIMARY_BLUE = '#1D3B5C'; 
+const ACCENT_MAGENTA = '#FF1A8B';
+const BACKGROUND_LIGHT = '#FFFFFF';
+const BACKGROUND_PAPER = '#F0FfFf';
 
 const theme = createTheme({
   typography: {
-    // ⬅️ NEW: Apply Truculenta to all headings
     fontFamily: TRUCULENTA_FONT, 
-    h1: { fontFamily: TRUCULENTA_FONT },
-    h2: { fontFamily: TRUCULENTA_FONT },
-    h3: { fontFamily: TRUCULENTA_FONT },
-    h4: { fontFamily: TRUCULENTA_FONT },
-    h5: { fontFamily: TRUCULENTA_FONT },
-    h6: { fontFamily: TRUCULENTA_FONT, fontWeight: 700 }, // Ensure visual weight
-    // Note: body1, body2, and subtitle1 will inherit the default system font, 
-    // ensuring readability for long blocks of text (like instructions).
+    h1: { fontFamily: TRUCULENTA_FONT, fontWeight: 700, fontSize: '4rem', color: PRIMARY_BLUE },
+    h3: { fontFamily: TRUCULENTA_FONT, fontWeight: 700, color: PRIMARY_BLUE },
+    h4: { fontFamily: TRUCULENTA_FONT, fontWeight: 700, color: PRIMARY_BLUE },
+    h5: { fontFamily: TRUCULENTA_FONT, fontWeight: 700, color: PRIMARY_BLUE },
+    h6: { fontFamily: TRUCULENTA_FONT, fontWeight: 700, color: PRIMARY_BLUE, textTransform: 'uppercase' }, 
   },
   palette: {
     primary: {
-      main: blueGrey[700],
+      main: PRIMARY_BLUE,
     },
     secondary: {
-      main: orange[500],
+      main: ACCENT_MAGENTA,
     },
     background: {
-      default: '#F5F5F5',
-      paper: '#FFFFFF',
+      default: BACKGROUND_LIGHT,
+      paper: BACKGROUND_PAPER,
     },
+    text: {
+        primary: PRIMARY_BLUE,
+        secondary: blueGrey[600]
+    }
   },
   shape: {
-    borderRadius: 12,
+    borderRadius: 8,
   },
   components: {
+    MuiContainer: {
+        styleOverrides: {
+            root: {
+                paddingTop: '2rem',
+                paddingBottom: '2rem',
+            }
+        }
+    },
     MuiCard: {
       styleOverrides: {
         root: {
-          borderRadius: 12,
-          boxShadow: '0 4px 12px rgba(0, 0, 0, 0.05)',
+          borderRadius: 16,
+          boxShadow: '0 8px 16px rgba(0, 0, 0, 0.1)',
+          border: `2px solid ${PRIMARY_BLUE}`,
+          cursor: 'pointer',
         },
       },
     },
     MuiAlert: {
-      styleOverrides: {
-        root: {
-          borderRadius: 12,
-        },
-      },
-    },
+        styleOverrides: {
+            root: {
+                borderRadius: 16,
+                border: `1px solid ${PRIMARY_BLUE}`,
+                backgroundColor: '#FFF0F0'
+            }
+        }
+    }
   },
 });
 
