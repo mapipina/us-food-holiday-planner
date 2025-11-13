@@ -1,14 +1,10 @@
 :root {
-  /* Keep: Global font settings */
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-
-  /* Keep: Dark mode colors */
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
   background-color: #242424;
-
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -16,18 +12,14 @@
 }
 
 body {
-  /* FIX: Remove centering and min-width to allow MUI to control the layout */
   margin: 0;
-  min-width: 100vw; /* Ensure it takes full width */
+  min-width: 100vw;
   min-height: 100vh;
 }
 
-/* Keep basic light mode switch */
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
     background-color: #ffffff;
   }
 }
-
-/* Remove all other unused styles (a, h1, button) */
