@@ -1,23 +1,9 @@
+import { MOCK_FOUND_HOLIDAY, MOCK_RECIPE_EMPTY_RESPONSE, MOCK_HOLIDAY_LIST, MOCK_RECIPES } from '../mocks/testMocks';
 import { getAllHolidays, getTodayHoliday, getRecipeByHolidayId } from './holidayService';
 import axios from 'axios'; 
 
 jest.mock('axios');
 const mockedAxios = axios as jest.Mocked<typeof axios>;
-
-const mockHolidayList = [
-    { id: 1, title: 'Pizza Day', description: 'Pizza', main_meal: 'Pizza', date_mm_dd: '02-09' },
-    { id: 2, title: 'Coffee Day', description: 'Coffee', main_meal: 'Coffee', date_mm_dd: '09-29' },
-];
-const mockTodayHoliday = { 
-    id: 10, 
-    title: 'Mock Today Holiday', 
-    description: 'Testing today.', 
-    main_meal: 'Testing', 
-    date_mm_dd: '01-01' 
-};
-const mockRecipes = [
-    { idMeal: '52771', strMeal: 'Spicy Arrabiata Penne', /* ... */ }
-];
 
 describe('Holiday Service Test Suite', () => {
     afterEach(() => {
@@ -29,7 +15,7 @@ describe('Holiday Service Test Suite', () => {
             data: { 
                 status: 'success', 
                 results: 2, 
-                data: { holidays: mockHolidayList }
+                data: { holidays: MOCK_HOLIDAY_LIST }
             }
         });
 
@@ -43,12 +29,12 @@ describe('Holiday Service Test Suite', () => {
         mockedAxios.get.mockResolvedValueOnce({
             data: { 
                 status: 'success', 
-                data: { holiday: mockTodayHoliday }
+                data: { holiday: MOCK_FOUND_HOLIDAY }
             }
         });
 
         const holiday = await getTodayHoliday();
-        expect(holiday.title).toBe('Mock Today Holiday');
+        expect(holiday?.title).toBe('National Mock Holiday');
     });
 
     it('should fetch and return an array of recipes for a given ID', async () => {
@@ -57,7 +43,7 @@ describe('Holiday Service Test Suite', () => {
                 status: 'success',
                 data: {
                     holiday: { title: 'Taco Day', main_meal: 'Taco' },
-                    recipes: mockRecipes
+                    recipes: MOCK_RECIPES
                 }
             }
         });
@@ -76,5 +62,40 @@ describe('Holiday Service Test Suite', () => {
         });
 
         await expect(getRecipeByHolidayId(123)).rejects.toThrow('No recipes found for the dish');
+    });
+
+    it('should successfully return holiday and recipes array when data exists', async () => {
+        mockedAxios.get.mockResolvedValueOnce({
+            data: { 
+                status: 'success', 
+                data: { holiday: MOCK_FOUND_HOLIDAY }
+            }
+        });
+        mockedAxios.get.mockResolvedValueOnce({
+            data: {
+                status: 'success',
+                data: {
+                    holiday: MOCK_FOUND_HOLIDAY,
+                    recipes: MOCK_RECIPES // Uses your existing mock array
+                }
+            }
+        });
+        
+        const holiday = await getTodayHoliday();
+        expect(holiday).toEqual(MOCK_FOUND_HOLIDAY);
+        const recipes = await getRecipeByHolidayId(15);
+        expect(recipes.length).toBeGreaterThan(0);
+        expect(recipes[0].strMeal).toBe('Spicy Arrabiata Penne'); 
+    });
+    it('should throw an error when holiday is found but recipes array is empty/null', async () => {
+        mockedAxios.get.mockResolvedValueOnce({
+            data: { 
+                status: 'success', 
+                data: { holiday: MOCK_FOUND_HOLIDAY }
+            }
+        });
+        mockedAxios.get.mockResolvedValueOnce(MOCK_RECIPE_EMPTY_RESPONSE);
+        await expect(getTodayHoliday()).resolves.toEqual(MOCK_FOUND_HOLIDAY);
+        await expect(getRecipeByHolidayId(15)).rejects.toThrow('No recipe data received for this holiday.');
     });
 });

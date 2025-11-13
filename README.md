@@ -27,11 +27,16 @@ Here are the current phases I've outlined with the tasks I'm anticipating gettin
 
 **Phase 4 - Initial Frontend Build**
 
-[ ] Set up sections for featured holiday and recipe results
+- ✅ Set up sections for featured holiday and recipe results
 
-[ ] Create mock objects based on expected results from recipes
+- ✅ Create mock objects based on expected results from recipes
 
-[ ] Create empty states for no holiday, errors from public apis, etc.
+- ✅ Create empty states for no holiday, errors from public apis, etc.
+- ✅ MAKE THIS FUNKY (UI) - Phase 1, not funky enough just yet, will get there
+
+[ ] Intro react-testing-library, add component testing
+
+[ ] Implement logic for searching `themealdb` for one of the suggested meals or holidays on the empty state (when today is not a holiday)
 
 **Phase 5 - CI/CD Updates And Addt'l Updates**
 

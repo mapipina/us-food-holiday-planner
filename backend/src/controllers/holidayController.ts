@@ -41,15 +41,17 @@ export const getTodaysHoliday = async (_req: Request, res: Response) => {
 
         const holiday = await Holiday.findOne({
             where: {
-                date_mm_dd: todayDate,
+                date_mm_dd: todayDate, //temporarily add '01-04' to get data for testing frontend
             },
             attributes: ['id', 'title', 'description', 'main_meal', 'date_mm_dd'],
         });
 
         if (!holiday) {
-            return res.status(404).json({
-                status: 'fail',
-                message: `No major food holiday found for today: ${todayDate}`
+            return res.status(200).json({
+                status: 'success',
+                data: {
+                    holiday: null,
+                }
             });
         }
 
