@@ -41,7 +41,7 @@ export const getTodaysHoliday = async (_req: Request, res: Response) => {
 
         const holiday = await Holiday.findOne({
             where: {
-                date_mm_dd: todayDate,
+                date_mm_dd: '01-04', //temporarily add '01-04' to get data for testing frontend
             },
             attributes: ['id', 'title', 'description', 'main_meal', 'date_mm_dd'],
         });

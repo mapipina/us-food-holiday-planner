@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, Typography, Alert, Card, CardContent } from '@mui/material';
 import { HolidayData, RecipeDatum } from '../types/Holiday';
-import { RecipeList } from './RecipeList';
+import RecipeList from './RecipeList';
 
 interface FeaturedSectionProps {
     holiday: HolidayData | null;
@@ -38,6 +38,9 @@ const FeaturedSection: React.FC<FeaturedSectionProps> = ({ holiday, recipes, err
                 
                 <Card variant="outlined" sx={{ mt: 3 }}>
                     <CardContent>
+                         <Typography variant="subtitle1" sx={{ fontWeight: 'bold', mb: 1 }}>
+                            Holiday Summary:
+                        </Typography>
                          <Typography variant="body1">
                             {holiday.description}
                         </Typography>
@@ -60,6 +63,9 @@ const FeaturedSection: React.FC<FeaturedSectionProps> = ({ holiday, recipes, err
 
                 <Card variant="outlined" sx={{ mb: 3 }}>
                     <CardContent>
+                         <Typography variant="subtitle1" sx={{ fontWeight: 'bold', mb: 1 }}>
+                            Holiday Summary:
+                        </Typography>
                          <Typography variant="body1">
                             {holiday.description}
                         </Typography>
